@@ -53,8 +53,8 @@ export const update = async (req: Request, res: Response) => {
   const { id } = req.params;
   const { user_name, user_email, user_password } = req.body;
   try {
-    const user = await User.update({ user_name, user_email, user_password }, { where: { user_id: id } });
-    return res.json({ user });
+    await User.update({ user_name, user_email, user_password }, { where: { user_id: id } });
+    return res.json({ msg: `User Updated SuccesFull` });
   } catch (error) {
     return res.status(500).json({ msg: "Server Error 500" });
   }

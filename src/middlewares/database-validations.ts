@@ -1,4 +1,4 @@
-import { User } from "../models";
+import { User,Project } from "../models";
 export const emailExist = async (email = "") => {
   const user = await User.findOne({ where: { user_email: email } });
   if (user) {
@@ -6,3 +6,11 @@ export const emailExist = async (email = "") => {
   }
   return true;
 };
+
+export const projectExist = async (id: number) => {
+  const project = await Project.findOne({ where: { project_id: id } });
+  if (!project) {
+    throw new Error(`Project With ID: ${id} Not Exists`);
+  }
+  return true;
+}

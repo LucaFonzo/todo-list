@@ -20,6 +20,7 @@ exports.sequelize = new sequelize_1.Sequelize((_a = process.env.DB_NAME) !== nul
 function connectDB() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
+            //await sequelize.sync();
             yield exports.sequelize.authenticate();
             console.log("Database connection succesfull");
         }

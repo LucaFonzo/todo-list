@@ -14,7 +14,9 @@ class Server {
         this.port = 4000;
         this.paths = {
             users: '/api/v1/users',
-            auth: '/api/v1/auth'
+            auth: '/api/v1/auth',
+            projects: '/api/v1/projects',
+            tasks: '/api/v1/tasks'
         };
         (0, db_1.connectDB)();
         this.middlewares();
@@ -23,6 +25,8 @@ class Server {
     routes() {
         this.app.use(this.paths.users, v1_1.UserRouter);
         this.app.use(this.paths.auth, v1_1.AuthRouter);
+        this.app.use(this.paths.projects, v1_1.ProjectRouter);
+        this.app.use(this.paths.tasks, v1_1.TaskRouter);
     }
     middlewares() {
         this.app.use(express_1.default.json());

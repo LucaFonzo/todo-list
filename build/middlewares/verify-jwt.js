@@ -8,22 +8,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.projectExist = exports.emailExist = void 0;
-const models_1 = require("../models");
-const emailExist = (email = "") => __awaiter(void 0, void 0, void 0, function* () {
-    const user = yield models_1.User.findOne({ where: { user_email: email } });
-    if (user) {
-        throw new Error(`User With Email ${email} Already Exists`);
+exports.verifyJWT = void 0;
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const verifyJWT = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const token = req.header('Authorization');
+    if (!token) {
+        return res.status(400).json({ msg: "Token is required" });
     }
-    return true;
-});
-exports.emailExist = emailExist;
-const projectExist = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const project = yield models_1.Project.findOne({ where: { project_id: id } });
-    if (!project) {
-        throw new Error(`Project With ID: ${id} Not Exists`);
+    const isValidToken = jsonwebtoken_1.default.verify(token, process.env.PRIVATE_KEY);
+    if (!isValidToken) {
+        return res.status(401).json({ msg: "Not is valid token" });
     }
-    return true;
+    next();
 });
-exports.projectExist = projectExist;
+exports.verifyJWT = verifyJWT;

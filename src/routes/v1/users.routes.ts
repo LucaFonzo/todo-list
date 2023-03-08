@@ -9,6 +9,7 @@ import {
 import { check } from "express-validator";
 import { validateResult } from "../../middlewares/validate-result";
 import { emailExist } from "../../middlewares/database-validations";
+import { verifyJWT } from "../../middlewares/verify-jwt";
 const router = Router();
 
 router.get("/", getAll);
@@ -24,10 +25,11 @@ router.post(
   ],
   create
 );
-router.delete("/:id", remove);
+router.delete("/:id", [verifyJWT], remove);
 router.put(
   "/:id",
   [
+    verifyJWT,
     check("user_name").not().isEmpty(),
     check("user_email").isEmail(),
     check("user_password").isLength({ min: 6 }),
