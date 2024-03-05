@@ -1,0 +1,44 @@
+ul {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+ul li {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 50%;
+  margin: 15px;
+  padding: 10px;
+  border-radius: 10px;
+}
+ul li p span{
+  padding: 10px;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.form form {
+  display: flex;
+  flex-direction: column;
+}
+.form form input {
+  padding: 10px;
+}
+.bg-blue {
+  background-color: blue;
+}
+.bg-yellow {
+  background-color: yellow;
+}
+.bg-red {
+  background-color: red;
+}
+.bg-gray {
+  background-color: gray;
+}

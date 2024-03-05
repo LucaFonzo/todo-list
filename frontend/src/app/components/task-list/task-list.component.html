@@ -1,0 +1,43 @@
+<div class="container">
+  <div class="form">
+    <h2>Add task</h2>
+    <form action="" [formGroup]="taskForm">
+      <label for="name">Name</label>
+      <input type="text" formControlName="name">
+      <label for="name">Description</label>
+      <input type="text" formControlName="description">
+      <label for="">Rank</label>
+      <select name="rank" id="rank" formControlName="rank">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+      <button (click)="add()">Add</button>
+    </form>
+  </div>
+  <ul>
+    @for(task of tasks; track task.id){
+    <li
+      [ngClass]="{'bg-blue': task.rank <= 2, 'bg-yellow': task.rank < 4 && task.rank > 2,'bg-red': task.rank >= 4, 'bg-gray': task.isComplete}">
+      <div>
+        <h2>{{task.name}}</h2>
+        <p>{{task.description}}</p>
+        <p>{{task.rank}}</p>
+      </div>
+      <div>
+        <p>
+          @if (task.isComplete){
+          <span><input type="checkbox" checked></span>
+          } @else {
+          <span><input type="checkbox"></span>
+          }
+          <button (click)="delete(task.id)">Delete</button>
+          <button>Edit</button>
+        </p>
+      </div>
+    </li>
+    }
+  </ul>
+</div>

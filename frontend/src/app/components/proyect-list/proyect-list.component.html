@@ -1,0 +1,10 @@
+<ul class="container">
+  @for(proyect of proyects; track proyect.id){
+  <li>
+    <a href="proyect/{{proyect.id}}">
+      <h2>{{proyect.name}}</h2>
+      <p>{{proyect.description}}</p>
+    </a>
+  </li>
+  }
+</ul>
