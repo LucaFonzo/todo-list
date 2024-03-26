@@ -1,63 +1,81 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { TaskServiceService } from '../../services/task-service.service';
+import { Task } from '../../services/models/Task';
+import { ActivatedRoute } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-task-list',
   standalone: true,
-  imports: [NgClass,ReactiveFormsModule],
+  imports: [NgClass,FormsModule],
   templateUrl: './task-list.component.html',
   styleUrl: './task-list.component.css'
 })
 export class TaskListComponent {
-  tasks = [
-    {
-      id: 1,
-      name: "Task 1",
-      description: "Description 1",
-      rank: 1,
-      isComplete: true
-    },
-    {
-      id: 2,
-      name: "Task 2",
-      description: "Description 2",
-      rank: 5,
-      isComplete: false
-    },
-    {
-      id: 3,
-      name: "Task 3",
-      description: "Description 3",
-      rank: 3,
-      isComplete: false
-    },
-    {
-      id: 4,
-      name: "Task 4",
-      description: "Description 4",
-      rank: 3,
-      isComplete: false
-    },
-    {
-      id: 5,
-      name: "Task 5",
-      description: "Description 5",
-      rank: 3,
-      isComplete: false
-    }
-  ]
+  tasks: Task[] = []
+  idProyect = -1;
+  name = "";
+  description = "";
+  rank = 0;
+  vacio = false;
+  editedId: number | null = 0;
+  newName = "";
+  newDescription = "";
+  newRank = 0;
+  private readonly _taskService = inject(TaskServiceService);
 
-  taskForm = new FormGroup({
-    name: new FormControl('', Validators.required),
-    description: new FormControl('', Validators.required),
-    rank: new FormControl('', Validators.required)
-  })
-  delete(id: number) {
-    console.log("Deleting.." + id);
-    this.tasks = this.tasks.filter(t => t.id != id);
+  constructor(private route: ActivatedRoute) {
   }
+
+  ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      this.idProyect = params['id'];
+    });
+    this.getTasks();
+  }
+
+  delete(id: number) {
+    this._taskService.delete(id).subscribe(result => {
+      console.log(result);
+      this.tasks = this.tasks.filter(t => t.id !== id);
+    })
+  }
+
+  getTasks() {
+    return this._taskService.getAll(this.idProyect).subscribe(result => {
+      this.tasks = result;
+    });
+  }
+
   add() {
-    console.log(this.taskForm.value);
+    if (this.name === '' || this.description === '' || this.rank === 0) {
+      this.vacio = true;
+      setTimeout(() => {
+        this.vacio = false;
+      }, 1000);
+    } else {
+      this._taskService.add({ name: this.name, description: this.description, rank: this.rank, isComplete: false, idProyect: this.idProyect }).subscribe(result => {
+      this.tasks.push(result);
+    });
+    }
+  }
+
+  edit(t: Task) {
+    this.editedId = t.id;
+    this.newName = t.name;
+    this.newDescription = t.description;
+    this.newRank = t.rank;
+  }
+
+  update(task: Task) {
+    task.name = this.newName;
+    task.description = this.newDescription;
+    task.rank = this.newRank;
+    this._taskService.update(task).subscribe(result => {
+      this.tasks = this.tasks.filter(t => t.id !== task.id);
+      this.tasks.unshift(result);
+      this.editedId = null;
+    })
   }
 }

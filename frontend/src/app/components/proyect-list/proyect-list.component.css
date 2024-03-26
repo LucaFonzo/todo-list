@@ -24,3 +24,7 @@ ul li:hover {
   cursor: pointer;
   transform: scale(1.1);
 }
+
+.btn-container .btn-warning {
+  margin-left: 10px;
+}

@@ -1,10 +1,25 @@
-<ul class="container">
-  @for(proyect of proyects; track proyect.id){
-  <li>
-    <a href="proyect/{{proyect.id}}">
-      <h2>{{proyect.name}}</h2>
-      <p>{{proyect.description}}</p>
-    </a>
-  </li>
-  }
-</ul>
+<div class="container">
+  <h2>Create a proyect</h2>
+  <form action="">
+    <input type="text" name="name" [(ngModel)]="name" placeholder="Name..." required>
+    <button (click)="add()" type="button">Add</button>
+  </form>
+  <ul>
+    @for(proyect of proyects; track proyect.id){
+    <li>
+      @if(editandoId !== proyect.id) {
+      <a href="proyect/{{proyect.id}}">
+        <h2>{{proyect.name}}</h2>
+      </a>
+      }@else {
+      <input type="text" [(ngModel)]="nuevoNombre">
+      <button (click)="update(proyect)">Guardar</button>
+      }
+      <div class="btn-container">
+        <button (click)="delete(proyect.id)" class="btn btn-danger">Delete</button>
+        <button (click)="edit(proyect)" class="btn btn-warning">Edit</button>
+      </div>
+    </li>
+    }
+  </ul>
+</div>

@@ -78,7 +78,6 @@ public class ProyectController {
             Proyect p = new Proyect();
             p.setName(request.getName());
             Set<Task> taskSet = new HashSet<>();
-            System.out.println();
             if (request.getIdsTask() !=  null){
                 for (Long idTask:request.getIdsTask()){
                     Task aux = taskService.findById(idTask);
@@ -86,7 +85,9 @@ public class ProyectController {
                 }
                 p.setTasks(taskSet);
             }
-            return ResponseEntity.status(HttpStatus.OK).body(new ResponseProyectDto(this.proyectService.update(id,p)));
+            Proyect result = this.proyectService.update(id,p);
+            System.out.println(result);
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseProyectDto(result));
         }catch (Exception e){
             System.out.printf(e.toString());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("500 Internal Server Error");
@@ -95,11 +96,12 @@ public class ProyectController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id){
         try {
-            boolean result = this.proyectService.delete(id);
-            if (result){
-                return ResponseEntity.status(HttpStatus.OK).body("Proyect With ID: " + id + " deleted");
+            Proyect result = this.proyectService.delete(id);
+            System.out.println(result);
+            if (result == null){
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("404 Not Found A Proyect With ID: " + id);
             }
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("404 Not Found A Proyect With ID: " + id);
+            return ResponseEntity.status(HttpStatus.OK).body(result);
         }catch (Exception e){
             System.out.println(e.toString());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("500 Internal Server Error");

@@ -15,7 +15,7 @@ public class Proyect {
     @Column
     private String name;
 
-    @OneToMany(mappedBy = "proyect")
+    @OneToMany(mappedBy = "proyect",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Task> tasks;
 
     public Proyect(){

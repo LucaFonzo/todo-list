@@ -15,6 +15,10 @@ public class TaskService implements BaseService<Task>{
     @Autowired
     private TaskRepository taskRepository;
 
+    public List<Task> findAll(Long id) throws Exception {
+        return taskRepository.findAll(id);
+    }
+
     @Override
     public List<Task> findAll() throws Exception {
         return taskRepository.findAll();
@@ -46,13 +50,13 @@ public class TaskService implements BaseService<Task>{
     }
 
     @Override
-    public boolean delete(Long id) throws Exception {
+    public Task delete(Long id) throws Exception {
         Optional<Task> op = taskRepository.findById(id);
         if (op.isEmpty()){
-            return false;
+            return null;
         }
         Task t = op.get();
         taskRepository.delete(t);
-        return true;
+        return t;
     }
 }

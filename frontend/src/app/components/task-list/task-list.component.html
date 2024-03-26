@@ -1,41 +1,62 @@
 <div class="container">
   <div class="form">
     <h2>Add task</h2>
-    <form action="" [formGroup]="taskForm">
+    <form action="">
       <label for="name">Name</label>
-      <input type="text" formControlName="name">
+      <input type="text" name="name" class="form-control" [(ngModel)]="name" required>
       <label for="name">Description</label>
-      <input type="text" formControlName="description">
+      <input type="text" name="description" class="form-control" [(ngModel)]="description" required>
       <label for="">Rank</label>
-      <select name="rank" id="rank" formControlName="rank">
+      <select name="rank" name="rank" id="rank" [(ngModel)]="rank">
         <option value="1">1</option>
         <option value="2">2</option>
         <option value="3">3</option>
         <option value="4">4</option>
         <option value="5">5</option>
       </select>
-      <button (click)="add()">Add</button>
+      <button (click)="add()" class="btn btn-primary">Add</button>
     </form>
+    @if (vacio) {
+    <div class="alert alert-warning">
+      <p>No se pueden enviar valores vacios</p>
+    </div>
+    }
   </div>
   <ul>
     @for(task of tasks; track task.id){
     <li
       [ngClass]="{'bg-blue': task.rank <= 2, 'bg-yellow': task.rank < 4 && task.rank > 2,'bg-red': task.rank >= 4, 'bg-gray': task.isComplete}">
       <div>
-        <h2>{{task.name}}</h2>
-        <p>{{task.description}}</p>
-        <p>{{task.rank}}</p>
+        @if (editedId === task.id){
+          <input type="text" [(ngModel)]="newName">
+          <input type="text" [(ngModel)]="newDescription">
+          <select name="rank" name="rank" id="rank" [(ngModel)]="newRank">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        }@else {
+          <h2>{{task.name}}</h2>
+          <p>{{task.description}}</p>
+          <p>{{task.rank}}</p>
+        }
       </div>
       <div>
-        <p>
-          @if (task.isComplete){
-          <span><input type="checkbox" checked></span>
-          } @else {
-          <span><input type="checkbox"></span>
-          }
-          <button (click)="delete(task.id)">Delete</button>
-          <button>Edit</button>
-        </p>
+        <div class="btn-container">
+            @if (task.isComplete){
+            <span><input type="checkbox" checked></span>
+            } @else {
+            <span><input type="checkbox"></span>
+            }
+            <button (click)="delete(task.id)" class="btn btn-danger">Delete</button>
+            @if(editedId === task.id) {
+              <button (click)="update(task)" class="btn btn-warning">Save</button>
+            }@else {
+              <button (click)="edit(task)" class="btn btn-warning">Edit</button>
+            }
+        </div>
       </div>
     </li>
     }

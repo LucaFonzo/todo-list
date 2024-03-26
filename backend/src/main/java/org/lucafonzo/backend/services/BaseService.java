@@ -11,5 +11,5 @@ public interface BaseService<E> {
 
     public E update(Long id,E entity)throws Exception;
 
-    public boolean delete(Long id)throws Exception;
+    public E delete(Long id)throws Exception;
 }

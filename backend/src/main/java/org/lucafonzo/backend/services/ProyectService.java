@@ -42,12 +42,12 @@ public class ProyectService implements BaseService<Proyect>{
     }
 
     @Override
-    public boolean delete(Long id) throws Exception {
+    public Proyect delete(Long id) throws Exception {
         Optional<Proyect> op = proyectRepository.findById(id);
         if (op.isEmpty()){
-            return false;
+            return null;
         }
         this.proyectRepository.delete(op.get());
-        return true;
+        return op.get();
     }
 }
