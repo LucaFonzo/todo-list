@@ -35,6 +35,17 @@ namespace TodoAppApi.Controllers
             return new TodoItemDto(todo.Id, todo.Title, todo.IsCompleted,todo.ProjectId);
         }
 
+        [HttpGet("project/{id}")]
+        public async Task<ActionResult<TodoItemDto>> GetTodoItemByProjectId(int id)
+        {
+            var todos = await _context.TodoItem
+                .Where(x => x.ProjectId == id)
+                .Select(x => new TodoItemDto(x.Id, x.Title, x.IsCompleted, x.ProjectId))
+                .ToListAsync();
+
+            return Ok(todos);
+        }
+
         [HttpPost]
         public async Task<ActionResult<TodoItemDto>> PostTodoItem(TodoItemDto todoItemDto)
         {

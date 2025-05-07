@@ -1,0 +1,33 @@
+<div class="todo-list-container">
+  <div class="project-header" *ngIf="project">
+    <button class="back-btn" (click)="goBack()">← Volver a Proyectos</button>
+    <h1>{{ project.name }}</h1>
+    <p class="project-description" *ngIf="project.description">{{ project.description }}</p>
+  </div>
+
+  <div class="error-message" *ngIf="error">
+    {{ error }}
+  </div>
+
+  <div class="add-todo-form">
+    <input type="text" [(ngModel)]="newTodoTitle" (keyup.enter)="addTodo()" placeholder="Agregar nueva tarea..."
+      class="new-todo-input" [disabled]="loading" />
+    <button (click)="addTodo()" class="add-todo-btn" [disabled]="loading || !newTodoTitle.trim()">
+      Agregar
+    </button>
+  </div>
+
+  <div class="loading-spinner" *ngIf="loading">
+    Cargando tareas...
+  </div>
+
+  <div class="todos-container" *ngIf="!loading">
+    <app-todo-item *ngFor="let todo of todos" [todo]="todo" (toggleComplete)="toggleComplete($event)"
+      (deleteTodo)="deleteTodo($event)" (updateTodo)="updateTodo($event)"></app-todo-item>
+  </div>
+
+  <div class="todo-stats" *ngIf="todos.length > 0 && !loading">
+    <span>{{ getPendingTodos() }} tareas pendientes</span>
+    <span>{{ getCompletedTodos() }} tareas completadas</span>
+  </div>
+</div>

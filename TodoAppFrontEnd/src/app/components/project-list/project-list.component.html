@@ -1,0 +1,33 @@
+<div class="project-list-container">
+  <h1>Proyectos</h1>
+
+  <div class="error-message" *ngIf="error">
+    {{ error }}
+  </div>
+
+  <div class="add-project-form">
+    <div class="form-group">
+      <input type="text" [(ngModel)]="newProjectName" (keyup.enter)="createProject()"
+        placeholder="Nombre del proyecto..." class="project-input" />
+      <textarea [(ngModel)]="newProjectDescription" placeholder="Descripción del proyecto..."
+        class="project-description"></textarea>
+    </div>
+    <button (click)="createProject()" class="add-project-btn" [disabled]="loading || !newProjectName.trim()">
+      Crear Proyecto
+    </button>
+  </div>
+
+  <div class="loading-spinner" *ngIf="loading">
+    Cargando proyectos...
+  </div>
+
+  <div class="projects-grid" *ngIf="!loading">
+    <div class="project-card" *ngFor="let project of projects">
+      <div class="project-content" (click)="navigateToProject(project.id!)">
+        <h3>{{ project.name }}</h3>
+        <p *ngIf="project.description">{{ project.description }}</p>
+      </div>
+      <button class="delete-btn" (click)="deleteProject(project.id!)">×</button>
+    </div>
+  </div>
+</div>

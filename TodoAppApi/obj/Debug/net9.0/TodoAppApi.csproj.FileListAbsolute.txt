@@ -157,10 +157,10 @@ E:\Workspace\todo-app\TodoAppApi\obj\Debug\net9.0\staticwebassets\msbuild.build.
 E:\Workspace\todo-app\TodoAppApi\obj\Debug\net9.0\staticwebassets\msbuild.buildMultiTargeting.TodoAppApi.props
 E:\Workspace\todo-app\TodoAppApi\obj\Debug\net9.0\staticwebassets\msbuild.buildTransitive.TodoAppApi.props
 E:\Workspace\todo-app\TodoAppApi\obj\Debug\net9.0\staticwebassets.pack.json
-E:\Workspace\todo-app\TodoAppApi\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
 E:\Workspace\todo-app\TodoAppApi\obj\Debug\net9.0\TodoAppApi.csproj.Up2Date
 E:\Workspace\todo-app\TodoAppApi\obj\Debug\net9.0\TodoAppApi.dll
 E:\Workspace\todo-app\TodoAppApi\obj\Debug\net9.0\refint\TodoAppApi.dll
 E:\Workspace\todo-app\TodoAppApi\obj\Debug\net9.0\TodoAppApi.pdb
 E:\Workspace\todo-app\TodoAppApi\obj\Debug\net9.0\TodoAppApi.genruntimeconfig.cache
 E:\Workspace\todo-app\TodoAppApi\obj\Debug\net9.0\ref\TodoAppApi.dll
+E:\Workspace\todo-app\TodoAppApi\obj\Debug\net9.0\TodoAppApi.sourcelink.json

@@ -1,0 +1,16 @@
+<div class="todo-item" [class.completed]="todo.isCompleted">
+  <div class="todo-content" *ngIf="!isEditing">
+    <input type="checkbox" [checked]="todo.isCompleted" (change)="onToggleComplete()" class="todo-checkbox" />
+    <span class="todo-title" (dblclick)="startEditing()">{{ todo.title }}</span>
+    <button class="delete-btn" (click)="onDelete()">×</button>
+  </div>
+
+  <div class="edit-form" *ngIf="isEditing">
+    <input type="text" [(ngModel)]="editedTitle" (keyup.enter)="saveEdit()" (keyup.escape)="cancelEdit()"
+      class="edit-input" #editInput autofocus />
+    <div class="edit-buttons">
+      <button class="save-btn" (click)="saveEdit()">Guardar</button>
+      <button class="cancel-btn" (click)="cancelEdit()">Cancelar</button>
+    </div>
+  </div>
+</div>
