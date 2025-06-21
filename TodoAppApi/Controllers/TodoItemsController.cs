@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TodoAppApi.Data;
 using TodoAppApi.DTOs;
@@ -18,6 +19,7 @@ namespace TodoAppApi.Controllers
             _context = context;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TodoItemDto>>> GetTodoItems()
         {
@@ -26,6 +28,7 @@ namespace TodoAppApi.Controllers
                 .ToListAsync();
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<TodoItemDto>> GetTodoItem(int id)
         {
@@ -35,6 +38,7 @@ namespace TodoAppApi.Controllers
             return new TodoItemDto(todo.Id, todo.Title, todo.IsCompleted,todo.ProjectId);
         }
 
+        [Authorize]
         [HttpGet("project/{id}")]
         public async Task<ActionResult<TodoItemDto>> GetTodoItemByProjectId(int id)
         {
@@ -46,6 +50,7 @@ namespace TodoAppApi.Controllers
             return Ok(todos);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<TodoItemDto>> PostTodoItem(TodoItemDto todoItemDto)
         {
@@ -69,6 +74,7 @@ namespace TodoAppApi.Controllers
             return CreatedAtAction(nameof(GetTodoItem), new { id = newTodoItem.Id }, new TodoItemDto(newTodoItem.Id, newTodoItem.Title, newTodoItem.IsCompleted,newTodoItem.ProjectId));
         }
 
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<ActionResult> PutTodoItem(int id, TodoItemDto todoItemDto)
         {
@@ -78,9 +84,10 @@ namespace TodoAppApi.Controllers
             todo.IsCompleted = todoItemDto.IsCompleted;
             _context.Entry(todo).State = EntityState.Modified;
             await _context.SaveChangesAsync();
-            return NoContent();
+            return Ok(todoItemDto);
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteTodoItem(int id)
         {

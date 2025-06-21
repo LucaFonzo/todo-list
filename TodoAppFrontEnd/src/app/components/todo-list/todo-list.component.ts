@@ -95,10 +95,12 @@ export class TodoListComponent implements OnInit {
     const todo = this.todos.find(t => t.id === todoId);
     if (todo) {
       todo.isCompleted = !todo.isCompleted;
-      this.todoService.toggleTodoStatus(todoId, todo).subscribe({
+      this.todoService.updateTodo(todoId, todo).subscribe({
         next: (updatedTodo) => {
           const index = this.todos.findIndex(t => t.id === todoId);
           if (index !== -1) {
+            console.log(updatedTodo);
+            console.log(this.todos[index])
             this.todos[index] = updatedTodo;
           }
         },

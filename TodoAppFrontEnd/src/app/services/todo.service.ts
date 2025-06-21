@@ -1,15 +1,17 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { TodoItemDto } from '../models/todo-item.dto';
+import { enviroment } from '../enviroments/enviroment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TodoService {
-  private apiUrl = 'http://localhost:5299/api/TodoItems';
+  private apiUrl = `${enviroment.apiUrl}/TodoItems`;
+  private http = inject(HttpClient);
 
-  constructor(private http: HttpClient) { }
+  constructor() { }
 
   getTodos(projectId: number): Observable<TodoItemDto[]> {
     return this.http.get<TodoItemDto[]>(`${this.apiUrl}/project/${projectId}`);
@@ -25,9 +27,5 @@ export class TodoService {
 
   deleteTodo(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
-  }
-
-  toggleTodoStatus(id: number, todo: TodoItemDto): Observable<TodoItemDto> {
-    return this.http.patch<TodoItemDto>(`${this.apiUrl}/${id}`, todo);
   }
 }

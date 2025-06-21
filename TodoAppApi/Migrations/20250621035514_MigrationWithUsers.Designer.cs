@@ -12,8 +12,8 @@ using TodoAppApi.Data;
 namespace TodoAppApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250405035532_InitMigration")]
-    partial class InitMigration
+    [Migration("20250621035514_MigrationWithUsers")]
+    partial class MigrationWithUsers
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -67,6 +67,27 @@ namespace TodoAppApi.Migrations
                     b.HasIndex("ProjectId");
 
                     b.ToTable("TodoItem");
+                });
+
+            modelBuilder.Entity("TodoAppApi.Models.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("password")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("TodoAppApi.Models.TodoItem", b =>

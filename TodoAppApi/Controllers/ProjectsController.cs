@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TodoAppApi.Data;
 using TodoAppApi.DTOs;
@@ -17,6 +18,7 @@ namespace TodoAppApi.Controllers
             _context = context;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ProjectDTO>>> GetProjects()
         {
@@ -25,6 +27,7 @@ namespace TodoAppApi.Controllers
                 .ToListAsync();
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<ProjectDTO>> GetTodoItem(int id)
         {
@@ -34,6 +37,7 @@ namespace TodoAppApi.Controllers
             return new ProjectDTO(project.Id, project.Name, project.TodoItem);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<ProjectDTO>> PostTodoItem(ProjectDTO projectDTO)
         {
@@ -48,6 +52,7 @@ namespace TodoAppApi.Controllers
             return CreatedAtAction(nameof(GetTodoItem), new { id = newProject.Id }, new ProjectDTO(newProject.Id, newProject.Name, newProject.TodoItem));
         }
 
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<ActionResult> PutTodoItem(int id, ProjectDTO projectDTO)
         {
@@ -60,6 +65,7 @@ namespace TodoAppApi.Controllers
             return NoContent();
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteTodoItem(int id)
         {

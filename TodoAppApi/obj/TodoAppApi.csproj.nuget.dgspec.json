@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Workspace\\todo-app\\TodoAppApi\\TodoAppApi.csproj": {}
+    "E:\\workspace\\todo-list\\TodoAppApi\\TodoAppApi.csproj": {}
   },
   "projects": {
-    "E:\\Workspace\\todo-app\\TodoAppApi\\TodoAppApi.csproj": {
+    "E:\\workspace\\todo-list\\TodoAppApi\\TodoAppApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Workspace\\todo-app\\TodoAppApi\\TodoAppApi.csproj",
+        "projectUniqueName": "E:\\workspace\\todo-list\\TodoAppApi\\TodoAppApi.csproj",
         "projectName": "TodoAppApi",
-        "projectPath": "E:\\Workspace\\todo-app\\TodoAppApi\\TodoAppApi.csproj",
+        "projectPath": "E:\\workspace\\todo-list\\TodoAppApi\\TodoAppApi.csproj",
         "packagesPath": "C:\\Users\\lucaf\\.nuget\\packages\\",
-        "outputPath": "E:\\Workspace\\todo-app\\TodoAppApi\\obj\\",
+        "outputPath": "E:\\workspace\\todo-list\\TodoAppApi\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -51,6 +51,14 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[9.0.6, )"
+            },
+            "Microsoft.AspNetCore.Identity": {
+              "target": "Package",
+              "version": "[2.3.1, )"
+            },
             "Microsoft.AspNetCore.Mvc.Abstractions": {
               "target": "Package",
               "version": "[2.3.0, )"
@@ -97,7 +105,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.201/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
